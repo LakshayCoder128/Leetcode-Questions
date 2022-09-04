@@ -16,21 +16,22 @@ class Solution
             ListNode *ans = new ListNode();
             ListNode *t = head;
             ListNode *p = ans;
-            int count = 0;
-            int sum;
+            // int count = 0;
+            int sum=0;
             while (t != NULL)
             {
                	// cout<<t->val<<endl;
                 if (t->val == 0)
                 {
                    	// cout<<"Sum: "<<sum<<endl;
-                    if (count != 0)
+                    if (t != head)
                     {
                         p->next = new ListNode(sum);
                         p = p->next;
+                        
                     }
                     sum = 0;
-                    count++;
+                    // count++;
                 }
                 else
                 {
