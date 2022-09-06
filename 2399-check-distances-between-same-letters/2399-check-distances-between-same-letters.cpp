@@ -25,14 +25,7 @@ class Solution
                         }
                     }
                 }
-                else
-                {
-
-                    if (distance[index] != 0)
-                    {
-                        return false;
-                    }
-                }
+//                 
             }
             return true;
         }
