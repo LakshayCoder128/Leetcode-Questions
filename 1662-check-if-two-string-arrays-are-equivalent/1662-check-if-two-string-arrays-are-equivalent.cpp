@@ -13,7 +13,7 @@ class Solution
             {
                 b += word2[i];
             }
-            if (a.length() != b.length()) return false;
+           	// if (a.length() != b.length()) return false;
 
             return (a == b);
         }
