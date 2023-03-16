@@ -3,6 +3,10 @@ class Solution
     public:
         void nextPermutation(vector<int> &p)
         {
+
+           	// built in function cpp
+           	//    next_permutation(permutation.begin(),permutation.begin()+n);
+           	//    return permutation;
             int n = p.size();
 
             int k, l;
