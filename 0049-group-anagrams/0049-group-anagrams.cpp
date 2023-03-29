@@ -7,7 +7,7 @@ class Solution
             for (auto i: strs)
             {
                 vector<int> count(26);
-                for (auto j:i)
+                for (auto j: i)
                 {
                     count[j - 'a']++;
                 }
