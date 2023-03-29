@@ -1,6 +1,7 @@
 // class Solution
 // {
 //     public:
+// O(nlogn + n)
 //         vector<int> topKFrequent(vector<int> &nums, int k)
 //         {
 //             map<int, int> m;
@@ -25,6 +26,7 @@
 class Solution
 {
     public:
+    // O(n+n)
         vector<int> topKFrequent(vector<int> &nums, int k)
         {
             unordered_map<int, int> freq;
