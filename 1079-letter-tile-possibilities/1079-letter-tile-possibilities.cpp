@@ -1,7 +1,7 @@
 class Solution
 {
     public:
-        void solve(string &tiles, string &output, map<int, bool> used_or_not, set<string> &unique_strings)
+        void solve(string &tiles, string &output, map<int, bool> &used_or_not, set<string> &unique_strings)
         {
 
             for (int i = 0; i < tiles.size(); i++)
