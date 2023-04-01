@@ -42,11 +42,12 @@ class Solution
 
                	// special condition 
                	// is condition pr tabhi ayenge jb back track ho jaega kyunki usi ke baad (ind < i)  aur hume check kr rhe hai 
-                // candidates[i] == candidates[i-1]	// kyunko agr ye dono equal hai to is value ke liye hum phle hi traverse    
-                // kr chuke hai aur ye sab possible ho paya sirf sorting ki wjh se  
+               	// candidates[i] == candidates[i-1]	// kyunko agr ye dono equal hai to is value ke liye hum phle hi traverse    
+               	// kr chuke hai aur ye sab possible ho paya sirf sorting ki wjh se  
                	// jab i taken index se aage ho aur  currindex ki value taken index ke barabar ho to mt lena 
                 if (i > ind && candidates[i] == candidates[i - 1]) continue;
 
+                if (candidates[i] > target) break;
                 t.push_back(candidates[i]);
                 solve(candidates, target - candidates[i], ans, t, i + 1);
                 t.pop_back();
