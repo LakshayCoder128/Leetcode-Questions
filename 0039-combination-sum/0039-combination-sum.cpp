@@ -1,26 +1,33 @@
 class Solution
 {
     public:
-        void dfs(int i, vector<int> &curr, int total, int target, vector<vector< int >> &res, vector< int > &candidates)
+        void solve(vector<int> &candidates, int target, vector<vector< int >> &ans, int index, vector< int > &temp)
         {
-            if (total == target)
+           	// base case 
+
+            if (target < 0) return;
+            if (target == 0)
             {
-                res.push_back(curr);
+                ans.push_back(temp);
                 return;
             }
-            if (i >= candidates.size() || total > target) return;
 
-            curr.push_back(candidates[i]);
-            dfs(i, curr, total + candidates[i], target, res, candidates);
-            curr.pop_back();
-            dfs(i + 1, curr, total, target, res, candidates);
+           	// processing and call
+            for (int i = index; i < candidates.size(); i++)
+            {
+                temp.push_back(candidates[i]);
+                solve(candidates, target - candidates[i], ans, i, temp);
+               	// back track
+                temp.pop_back();
+               	// solve(candidates,target,ans,i,temp);
+            }
         }
+
     vector<vector < int>> combinationSum(vector<int> &candidates, int target)
     {
-        vector<vector < int>> res;
-        vector<int> curr;
-        int i = 0, total = 0;
-        dfs(i, curr, total, target, res, candidates);
-        return res;
+        vector<vector < int>> ans;
+        vector<int> t;
+        solve(candidates, target, ans, 0, t);
+        return ans;
     }
 };
