@@ -1,40 +1,21 @@
 class Solution
 {
     public:
-
-        void solve(int currOpen, int currClosed, string &a, vector<string> &ans, int n)
+        void solve(int o, int c, int n, string temp, vector<string> &ans)
         {
-            if (currOpen == n && currClosed == n)
+            if (c == n)
             {
-               	// ans.push_back({"()"});
-                ans.push_back(a);
+                ans.push_back(temp);
                 return;
             }
-           	// a.push_back('(');
-            if (currOpen < n)
-            {
-                a.push_back('(');
-                solve(currOpen + 1, currClosed, a, ans, n);
-
-               	// back track
-                a.pop_back();
-            }
-            if (currClosed < n && currOpen > currClosed)
-            {
-                a.push_back(')');
-                solve(currOpen, currClosed + 1, a, ans, n);
-
-               	// back track
-                a.pop_back();
-            }
-
-           	
+            if (o < n) solve(o + 1, c, n, temp + '(', ans);
+            if (c < o) solve(o, c + 1, n,temp + ')', ans);
         }
     vector<string> generateParenthesis(int n)
     {
+        string temp;
         vector<string> ans;
-        string a = "(";
-        solve(1, 0, a, ans, n);
+        solve(0, 0, n, temp, ans);
         return ans;
     }
 };
