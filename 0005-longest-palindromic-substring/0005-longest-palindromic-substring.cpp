@@ -2,10 +2,13 @@ class Solution {
 public:
     string longestPalindrome(string s) {
         
+        
+        // Search through the middle approach 
+        // T.C. -> O(n²)
         int start = 0;
         int resLen = 0;
         for(int i=0;i<s.length();i++){
-            // odd
+            // odd 
             int left = i,right = i;
             while(left >=0 && right < s.length() && s[left] == s[right]){
                 if(right - left +1 > resLen) {start = left;  resLen = right - left +1;}
@@ -13,7 +16,7 @@ public:
                 right++;
             }
             
-            // evenlen
+            // evenlen 
             left = i,right = i+1;
             while(left >=0 && right < s.length() && s[left] == s[right]){
                 if(right - left +1 > resLen) {start = left;  resLen = right - left +1;}
