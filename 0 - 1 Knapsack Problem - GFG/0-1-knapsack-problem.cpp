@@ -37,11 +37,28 @@ class Solution
         return dp[ind][W] = max(incl,exc);
         
     }
+     int solvebu(int W, int wt[], int val[], int n,int ind){
+        vector<vector<int>>dp(n+1,vector<int>(W+1,0));
+        
+        for(int ind = n-1;ind>=0;ind--){
+            for(int c = 0 ;c<= W;c++){
+                int incl = 0;
+                if(c >= wt[ind])
+                    incl = val[ind] + dp[ind+1][c-wt[ind]];
+        
+                int exc = 0 + dp[ind+1][c];
+        
+                dp[ind][c] = max(incl,exc);
+            }
+        }
+        return dp[0][W];
+        
+    }
     int knapSack(int W, int wt[], int val[], int n) 
     { 
         int ind = 0;
         vector<vector<int>>dp(n+1,vector<int>(W+1,-1));
-        return solvemeo(W,wt,val,n,ind,dp);
+        return solvebu(W,wt,val,n,ind);
     }
 };
 
