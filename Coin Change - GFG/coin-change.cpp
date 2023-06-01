@@ -4,31 +4,36 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    private:
-    
-long long getWays(int n, int c[],int N, int sum, int current, vector<vector<long long>>& dp) {
-
-    if (sum > n)
-        return 0;
-    if (dp[current][sum] != -1)
-        return dp[current][sum];
-    if (sum == n) {
-        return 1;
-
-    }
-    long long count = 0;
-    for (int i = current ; i < N ; i++ )
-        count += getWays(n, c, N,sum + c[i], i , dp);
-
-    return dp[current][sum] = count;
-
-}
   public:
- 
+  
+//   long long int Recsolve(int coins[],int N,int sum,int ind){
+//       if(sum == 0)return 1;
+//       if(sum < 0 || ind >= N) return 0;
+//       // exclsion 
+//       long long int exc = Recsolve(coins,N,sum,ind+1);
+//       // inclusion 
+//       long long int inc = Recsolve(coins,N,sum - coins[ind],ind);
+      
+//       return inc + exc;
+//   }
+  
+  long long int RecMemosolve(int coins[],int N,int sum,int ind,vector<vector<long long int>>&dp){
+      if(sum == 0)return 1;
+      if(sum < 0 || ind >= N) return 0;
+      if(dp[ind][sum] != -1)return dp[ind][sum];
+      // exclsion 
+      long long int exc = RecMemosolve(coins,N,sum,ind+1,dp);
+      // inclusion 
+      long long int inc = RecMemosolve(coins,N,sum - coins[ind],ind,dp);
+      
+      return dp[ind][sum] = inc + exc;
+  }
     long long int count(int coins[], int N, int sum) {
         int ind = 0;
-        vector<vector<long long>>dp(N,vector<long long>(sum+1,-1));
-        return getWays(sum,coins,N,0,ind,dp);
+        vector<vector<long long int>>dp(N+1,vector<long long int>(sum+1,-1));
+        // int ans = Recsolve(coins,N,sum,ind);
+        long long int ans = RecMemosolve(coins,N,sum,ind,dp);
+        return ans;
     }
 };
 
