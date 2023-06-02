@@ -10,6 +10,7 @@ using namespace std;
 class Solution{
     
 public:
+
     int solve(int n , int r, vector<vector<int>>&dp){
         if(dp[n][r] != -1)return dp[n][r];
         if(r>n)return 0;
@@ -17,6 +18,7 @@ public:
         int ans =  (nCr(n-1,r-1)+ nCr(n-1,r));
         return dp[n][r] = ans;
     }
+    
     int Tab(int n,int r){
         if(r>n)return 0;
         vector<vector<int>>dp(n+1,vector<int>(r+1,1));
@@ -29,9 +31,21 @@ public:
         }
         return dp[n][r];
     }
+    int spaceOptimized(int n,int r){
+        vector<int>dp(r+1,0);
+        dp[0] =1;
+        for(int i=0;i<=n;i++){
+            for(int j=min(i,r);j> 0;j--){
+                dp[j] =( dp[j-1] + dp[j])%1000000007;
+            }
+        }
+        return dp[r];
+        
+    }
+    
     int nCr(int n, int r){
         // vector<vector<int>>dp(n+1,vector<int>(r+1,-1));
-        int ans = Tab(n,r);
+        int ans = spaceOptimized(n,r);
         return ans;
     }
 };
