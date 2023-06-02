@@ -28,7 +28,7 @@ class Solution
         vector<vector < int>> dp(n + 2, vector<int> (n + 2, 0));
         for (int start = n; start >= 1; start--)
         {
-            for (int end = start+1; end <= n; end++)
+            for (int end = start + 1; end <= n; end++)
             {
                 int mini = INT_MAX;
 
@@ -44,7 +44,7 @@ class Solution
 
     int getMoneyAmount(int n)
     {
-        //vector<vector < int>> dp(n + 1, vector<int> (n + 1, -1));
+       	//vector<vector < int>> dp(n + 1, vector<int> (n + 1, -1));
         return tab(n);
     }
 };
