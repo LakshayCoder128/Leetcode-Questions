@@ -22,9 +22,23 @@ class Solution
         }
         return dp[n] = ans;
     }
+    int tab(int N)
+    {
+        vector<int> dp(N + 1, 1);
+        for (int n = 2; n <= N; n++)
+        {
+            int ans = 0;
+            for (int i = 1; i <= n; i++)
+            {
+                ans += dp[i - 1] *dp[n - i];
+            }
+            dp[n] = ans;
+        }
+        return dp[N];
+    }
     int numTrees(int n)
     {
-        vector<int> dp(n + 1, -1);
-        return Msolve(n, dp);
+        // vector<int> dp(n + 1, -1);
+        return tab(n);
     }
 };
