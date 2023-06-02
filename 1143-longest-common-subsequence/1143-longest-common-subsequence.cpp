@@ -32,7 +32,7 @@ class Solution
 
     int tabSolve(string &t1, string &t2)
     {
-        vector<vector < int>> dp(t1.size() + 1, vector<int> (t2.size()+1, 0));
+        vector<vector < int>> dp(t1.size() + 1, vector<int> (t2.size() + 1, 0));
         for (int i = t1.size() - 1; i >= 0; i--)
         {
             for (int j = t2.size() - 1; j >= 0; j--)
@@ -50,7 +50,7 @@ class Solution
     }
     int longestCommonSubsequence(string text1, string text2)
     {
-        // vector<vector < int>> dp(text1.size() + 1, vector<int> (text2.size(), -1));
+       	// vector<vector < int>> dp(text1.size() + 1, vector<int> (text2.size(), -1));
         return tabSolve(text1, text2);
     }
 };
