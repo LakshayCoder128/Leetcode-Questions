@@ -15,7 +15,7 @@ class Solution
         }
     int tabsolve(vector<int> &nums, int T)
     {
-        vector<unsigned int> dp(T + 1, 1);
+        vector < unsigned int > dp(T + 1, 1);
         for (int target = 1; target <= T; target++)
         {
             int ways = 0;
@@ -29,8 +29,6 @@ class Solution
     }
     int combinationSum4(vector<int> &nums, int target)
     {
-        // vector<int> Dp(target + 1, -1);
-        // int a = Dsolve(nums, target, Dp);
         int a = tabsolve(nums, target);
         return a;
     }
