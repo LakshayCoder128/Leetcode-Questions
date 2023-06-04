@@ -15,10 +15,24 @@ class Solution
 
             return dp[n] = ans;
         }
-    int numSquares(int n)
+    int numSquares(int N)
     {
-        vector<int> Dp(n + 1, -1);
-        int a = solve(n, Dp);
-        return a;
+        vector<int> dp(N + 1,0);
+        // int a = solve(n, Dp);
+        
+        for(int n=1;n<=N;n++){
+             int ans = INT_MAX - 2;
+
+            for (int i = 1; i * i <= n; i++)
+            {
+                if(n-i*i >= 0)
+                    ans = min(ans, 1 + dp[n - i *i]);
+                
+            }
+
+            dp[n] = ans;
+        }
+        
+        return dp[N];
     }
 };
