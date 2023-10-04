@@ -1,51 +1,41 @@
-/*
-// Definition for a Node.
-class Node {
+// Include the class Node definition here
+
+class Solution {
 public:
-    int val;
-    Node* next;
-    Node* random;
+    Node* copyRandomList(Node* head) {
+        if (!head) return nullptr;
 
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
-
-class Solution
-{
-    public:
-        Node* copyRandomList(Node *head)
-        {
-            if (head == NULL) return NULL;
-            Node *ptr = head;
-            while (ptr)
-            {
-                Node *newNode = new Node(ptr->val);
-                newNode->next = ptr->next;
-                ptr->next = newNode;
-                ptr = newNode->next;
-            }
-
-            ptr = head;
-            while (ptr != NULL)
-            {
-                ptr->next->random = (ptr->random != NULL) ? ptr->random->next : NULL;
-                ptr = ptr->next->next;
-            }
-
-            Node *ptr_old_list = head;	// A->B->C
-            Node *ptr_new_list = head->next;	// A'->B'->C'
-            Node *head_old = head->next;
-            while (ptr_old_list != NULL)
-            {
-                ptr_old_list->next = ptr_old_list->next->next;
-                ptr_new_list->next = (ptr_new_list->next != NULL) ? ptr_new_list->next->next : NULL;
-                ptr_old_list = ptr_old_list->next;
-                ptr_new_list = ptr_new_list->next;
-            }
-            return head_old;
+        // Step 1: Duplicate nodes and insert them into the original list.
+        Node* current = head;
+        while (current) {
+            Node* newNode = new Node(current->val);
+            newNode->next = current->next;
+            current->next = newNode;
+            current = newNode->next;
         }
+
+        // Step 2: Adjust random pointers of copied nodes.
+        current = head;
+        while (current) {
+            if (current->random) {
+                current->next->random = current->random->next;
+            }
+            current = current->next->next;
+        }
+
+        // Step 3: Split the merged list into two separate lists.
+        current = head;
+        Node* newHead = head->next;
+        Node* newCurrent = newHead;
+        while (current) {
+            current->next = newCurrent->next;
+            current = current->next;
+            if (current) {
+                newCurrent->next = current->next;
+                newCurrent = newCurrent->next;
+            }
+        }
+
+        return newHead;
+    }
 };
