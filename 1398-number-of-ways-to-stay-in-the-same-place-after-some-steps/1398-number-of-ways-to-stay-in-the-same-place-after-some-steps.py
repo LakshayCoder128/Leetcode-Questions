@@ -1,12 +1,22 @@
 MOD = 10**9 + 7
 
 class Solution:
-    def numWays(self, steps: int, arrLen: int) -> int:
-        dp = [[0] * (min(steps, arrLen) + 2) for _ in range(steps + 1)]
-        dp[0][0] = 1
+    def TopDown(self, steps, arrLen, pos, dp):
+        if steps == 0 and pos == 0:
+            return 1
+        if steps == 0 and pos != 0:
+            return 0
+        if steps < 0 or pos < 0 or pos >= arrLen:
+            return 0
+        if dp[steps][pos] != -1:
+            return dp[steps][pos]
+        dp[steps][pos] = ((self.TopDown(steps - 1, arrLen, pos, dp) % MOD  # stay
+                + self.TopDown(steps - 1, arrLen, pos + 1, dp) % MOD) % MOD  # right
+            + self.TopDown(steps - 1, arrLen
 
-        for step in range(1, steps + 1):
-            for pos in range(min(steps, arrLen)):
-                dp[step][pos] = ((dp[step - 1][pos] + dp[step - 1][pos + 1]) % MOD + (dp[step - 1][pos - 1] if pos > 0 else 0)) % MOD
+, pos - 1, dp) % MOD) % MOD  # left
+        return dp[steps][pos]
 
-        return dp[steps][0]
+    def numWays(self, steps, arrLen):
+        dp = [[-1 for _ in range(steps + 2)] for _ in range(steps + 1)]
+        return self.TopDown(steps, arrLen, 0, dp)
