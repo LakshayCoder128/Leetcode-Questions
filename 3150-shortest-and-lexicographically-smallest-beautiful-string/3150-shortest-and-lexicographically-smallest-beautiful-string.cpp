@@ -15,10 +15,7 @@ class Solution
                         cnt++;
                         if (cnt == k)
                         {
-                            if (len == 0)
-                            {
-                                len = j - i + 1;
-                            }
+                            if (len == 0) len = j - i + 1;
                             else if (len > j - i + 1)
                             {
                                 len = j - i + 1;
@@ -37,24 +34,14 @@ class Solution
                     {
                         cnt++;
                         if (cnt == k)
-                        {
                             if (len == j - i + 1)
-                            {
-
                                 if (ans == "")
-                                {
                                     ans = s.substr(i, len);
-                                }
                                 else
-                                {
                                     ans = min(ans, s.substr(i, len));
-                                }
-                            }
-                        }
                     }
                 }
             }
-
             return ans;
         }
 };
