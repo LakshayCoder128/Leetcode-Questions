@@ -1,52 +1,62 @@
 class Solution {
 public:
+    // Helper function for Depth-First Search (DFS)
+    int dfs(vector<int> &left, vector<int> &right, int root) {
+        // If the current node is NULL, return 0 as there are no nodes in this subtree.
+        if (root == -1) {
+            return 0;
+        }
+        
+        // Recursively count the nodes in the left and right subtrees and add 1 for the current node.
+        return 1 + dfs(left, right, left[root]) + dfs(left, right, right[root]);
+    }
+
     bool validateBinaryTreeNodes(int n, vector<int>& leftChild, vector<int>& rightChild) {
-    int edgeCount = 0;
-    vector<int> parentCount(n, 0);
+        // Create a vector to keep track of the parent count for each node.
+        vector<int> parentCount(n, 0);
 
-    for (int i = 0; i < n; i++) {
-        if (leftChild[i] != -1) {
-            parentCount[leftChild[i]]++;
+        // Initialize the root node as -1 (no root yet).
+        int root = -1;
 
-            if (parentCount[leftChild[i]] > 1) return false;
-            edgeCount++;
+        // Iterate through the child nodes.
+        for (int i = 0; i < leftChild.size(); i++) {
+            // Check the left child.
+            if (leftChild[i] != -1) {
+                // If a node has more than one parent, return false.
+                if (parentCount[leftChild[i]]++ == 1) {
+                    return false;
+                }
+            }
+
+            // Check the right child.
+            if (rightChild[i] != -1) {
+                // If a node has more than one parent, return false.
+                if (parentCount[rightChild[i]]++ == 1) {
+                    return false;
+                }
+            }
         }
 
-        if (rightChild[i] != -1) {
-            parentCount[rightChild[i]]++;
-
-            if (parentCount[rightChild[i]] > 1) return false;
-            edgeCount++;
+        // Find the root node and check for multiple roots.
+        for (int i = 0; i < leftChild.size(); i++) {
+            // If a node has no incoming edges (in-degree is 0) and has children, it's a candidate root.
+            if (parentCount[i] == 0) {
+                if (root == -1) {
+                    // If there is no previous candidate root, set the current node as the root.
+                    root = i;
+                } else {
+                    // If we already have a candidate root, return false (multiple roots).
+                    return false;
+                }
+            }
         }
-    }
 
-    // The count of edges should be n-1.
-    if (edgeCount != n - 1) return false;
-
-    // Parent count should be exactly 1 or 0.
-    int root = -1;
-    for (int i = 0; i < n; i++) {
-        if (parentCount[i] == 0) {
-            if (root == -1) root = i;
-            else return false;
+        // If there is no root, return false (no valid tree).
+        if (root == -1) {
+            return false;
         }
+
+        // Perform a depth-first search (DFS) from the root and check if all nodes are visited.
+        return dfs(leftChild, rightChild, root) == n;
     }
-
-    // Perform a breadth-first search to check the visited node count.
-    queue<int> q;
-    q.push(root);
-
-    int visitedCount = 0;
-
-    while (!q.empty()) {
-        int node = q.front();
-        q.pop();
-        visitedCount++;
-
-        if (leftChild[node] != -1) q.push(leftChild[node]);
-        if (rightChild[node] != -1) q.push(rightChild[node]);
-    }
-
-    return visitedCount == n;
-}
 };
