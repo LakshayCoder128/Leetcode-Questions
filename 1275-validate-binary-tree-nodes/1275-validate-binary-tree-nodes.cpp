@@ -2,20 +2,20 @@ class Solution {
 public:
     bool validateBinaryTreeNodes(int n, vector<int>& leftChild, vector<int>& rightChild) {
        int count = 0;
-       vector<int>indegree(n, 0);
+       vector<int>parent(n, 0);
 
        for(int i = 0; i < n; i++) {
             if(leftChild[i] != -1) {
-                indegree[leftChild[i]]++;
+                parent[leftChild[i]]++;
 
-                if(indegree[leftChild[i]] > 1) return false;
+                if(parent[leftChild[i]] > 1) return false;
                 count++;
             }
 
             if(rightChild[i] != -1) {
-                indegree[rightChild[i]]++;
+                parent[rightChild[i]]++;
 
-                if(indegree[rightChild[i]] > 1) return false;
+                if(parent[rightChild[i]] > 1) return false;
                 count++;
             }
        }
@@ -23,10 +23,10 @@ public:
        // count of edges should be n-1
        if(count != n-1) return false;
 
-        //    indegree should be exactly 1 or 0.
+        //    parent should be exactly 1 or 0.
         int root = -1;
         for(int i = 0; i< n; i++) {
-            if(indegree[i] == 0) {
+            if(parent[i] == 0) {
                 if(root == -1) root = i;
                 else return false;
             };
