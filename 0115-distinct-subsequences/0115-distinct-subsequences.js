@@ -1,27 +1,32 @@
-/**
- * @param {string} s
- * @param {string} t
- * @return {number}
- */
-var numDistinct = function(s, t) {
-     const m = s.length;
-    const n = t.length;
+var numDistinct = function (s, t) {
+    const dp = Array(s.length)
+        .fill(0)
+        .map(() => Array(t.length).fill(-1));
 
-    const dp = new Array(m + 1).fill().map(() => new Array(n + 1).fill(0));
-
-    for (let i = 0; i <= m; i++) {
-        dp[i][n] = 1;
-    }
-
-    for (let sIndex = m - 1; sIndex >= 0; sIndex--) {
-        for (let tIndex = n - 1; tIndex >= 0; tIndex--) {
-            dp[sIndex][tIndex] = dp[sIndex + 1][tIndex];
-
-            if (s[sIndex] === t[tIndex]) {
-                dp[sIndex][tIndex] += dp[sIndex + 1][tIndex + 1];
-            }
+    function recursiveWithMemoization(s_ind, t_ind) {
+        if (t_ind === t.length) {
+            return 1;
         }
+        if (s_ind === s.length) {
+            return 0;
+        }
+
+        if (dp[s_ind][t_ind] !== -1) {
+            return dp[s_ind][t_ind];
+        }
+
+        let take = 0, notTake = 0;
+
+        if (s[s_ind] === t[t_ind]) {
+            take = recursiveWithMemoization(s_ind + 1, t_ind + 1);
+        }
+
+        notTake = recursiveWithMemoization(s_ind + 1, t_ind);
+
+        dp[s_ind][t_ind] = take + notTake;
+
+        return dp[s_ind][t_ind];
     }
 
-    return dp[0][0];
+    return recursiveWithMemoization(0, 0);
 };
