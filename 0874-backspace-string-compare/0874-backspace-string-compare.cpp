@@ -1,28 +1,46 @@
 class Solution {
 public:
-    bool backspaceCompare(string s, string t) {
-              int i = s.length() - 1, j = t.length() - 1;
+    bool backspaceCompare(string S, string T) {
+        int i = S.size() - 1, j = T.size() - 1;
         int skipS = 0, skipT = 0;
 
-        while (i >= 0 || j >= 0) { // While there may be chars in build(S) or build (T)
-            while (i >= 0) { // Find position of next possible char in build(S)
-                if (s[i] == '#') {skipS++; i--;}
-                else if (skipS > 0) {skipS--; i--;}
-                else break;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (S[i] == '#') {
+                    skipS++;
+                    i--;
+                } else if (skipS > 0) {
+                    skipS--;
+                    i--;
+                } else {
+                    break;
+                }
             }
-            while (j >= 0) { // Find position of next possible char in build(T)
-                if (t[j] == '#') {skipT++; j--;}
-                else if (skipT > 0) {skipT--; j--;}
-                else break;
+
+            while (j >= 0) {
+                if (T[j] == '#') {
+                    skipT++;
+                    j--;
+                } else if (skipT > 0) {
+                    skipT--;
+                    j--;
+                } else {
+                    break;
+                }
             }
-            // If two actual characters are different
-            if (i >= 0 && j >= 0 && s[i] != t[j])
+
+            if (i >= 0 && j >= 0 && S[i] != T[j]) {
                 return false;
-            // If expecting to compare char vs nothing
-            if ((i >= 0) != (j >= 0))
+            }
+
+            if ((i >= 0) != (j >= 0)) {
                 return false;
-            i--; j--;
+            }
+
+            i--;
+            j--;
         }
+
         return true;
     }
 };
