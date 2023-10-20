@@ -2,9 +2,9 @@ class Solution {
 public:
     int maxProfit(int maxTransactions, vector<int>& prices) {
         int n = prices.size();
-        if (n <= 1 || maxTransactions <= 0) {
-            return 0;
-        }
+        // if (n <= 1 || maxTransactions <= 0) {
+        //     return 0;
+        // }
 
         // Create a 2D array to store the maximum profit.
         vector<vector<int>> maxProfit(n, vector<int>(maxTransactions + 1, 0));
