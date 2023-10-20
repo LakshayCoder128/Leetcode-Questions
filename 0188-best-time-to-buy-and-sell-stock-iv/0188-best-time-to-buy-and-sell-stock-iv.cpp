@@ -1,54 +1,24 @@
-class Solution
-{
-    public:
-        vector<vector<vector< int>>> dp;
-
-    int solve(vector<int> &p, int ind, bool b, int k)
-    {
-        if (ind >= p.size() || k <= 0) return 0;
-
-        if (dp[ind][b][k] != -1) return dp[ind][b][k];
-        if (b)
-        {
-            return dp[ind][b][k] = max(-p[ind] + solve(p, ind + 1, !b, k), solve(p, ind + 1, b, k));
+class Solution {
+public:
+    int maxProfit(int maxTransactions, vector<int>& prices) {
+        int n = prices.size();
+        if (n <= 1 || maxTransactions <= 0) {
+            return 0;
         }
-        else
-        {
-            return dp[ind][b][k] = max({ p[ind] + solve(p, ind + 1, !b, k - 1),
-                solve(p, ind + 1, b, k) });
-        }
-       	// return max(sell, buy);
-    }
 
-    int bottomup(int K, vector<int> &p)
-    {
-        vector<vector<vector< int>>> dp(p.size() + 1, vector<vector < int>> (3, vector<int> (K + 1, 0)));
+        // Create a 2D array to store the maximum profit.
+        vector<vector<int>> maxProfit(n, vector<int>(maxTransactions + 1, 0));
 
-        for (int ind = p.size()-1; ind >= 0; ind--)
-        {
-            for (int b = 0; b <=1 ; b++)
-            {
-                for (int k = 1; k <= K; k++)
-                {
-                    if (b)
-                    {
-                        dp[ind][b][k] = max(-p[ind] + dp[ind + 1][!b][k], dp[ind + 1][b][k]);
-                    }
-                    else
-                    {
-                        dp[ind][b][k] = max(p[ind] + dp[ind + 1][!b][k - 1],
-                            dp[ind + 1][b][k]);
-                    }
-                }
+        for (int transaction = 1; transaction <= maxTransactions; transaction++) {
+            int maxDiff = -prices[0];
+            for (int day = 1; day < n; day++) {
+                // Calculate the maximum profit for the current day and transaction.
+                maxProfit[day][transaction] = max(maxProfit[day - 1][transaction], prices[day] + maxDiff);
+                // Update the maximum difference for the current day.
+                maxDiff = max(maxDiff, maxProfit[day - 1][transaction - 1] - prices[day]);
             }
         }
-        return dp[0][1][K];
-    }
 
-    int maxProfit(int k, vector<int> &prices)
-    {
-       	// dp.resize(prices.size() + 1, vector<vector < int>> (3, vector<int> (k + 1, -1)));
-       	// return solve(prices, 0, 1, k);
-        return bottomup(k, prices);
+        return maxProfit[n - 1][maxTransactions];
     }
 };
