@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int bottomup(int K, vector<int> &p) {
-        vector<vector<vector<int>>> dp(p.size() + 1, vector<vector<int>>(3, vector<int>(K + 1, 0)));
+    int RecursionWithMemoisation(vector<int> &p, int ind, bool canBuy, int k, vector<vector<vector<int>>> &dp) {
+        if (ind >= p.size() || k <= 0) return 0;
         
-        for (int ind = p.size() - 1; ind >= 0; ind--) {
-            for (int b = 0; b <= 1; b++) {
-                for (int k = 1; k <= K;
-
- k++) {
-                    if (b) {
-                        dp[ind][b][k] = max(-p[ind] + dp[ind + 1][!b][k], dp[ind + 1][b][k]);
-                    } else {
-                        dp[ind][b][k] = max(p[ind] + dp[ind + 1][!b][k - 1], dp[ind + 1][b][k]);
-                    }
-                }
-            }
+        if (dp[ind][canBuy][k] != -1) return dp[ind][canBuy][k];
+        
+        if (canBuy) {
+            dp[ind][canBuy][k] = max(-p[ind] + RecursionWithMemoisation(p, ind + 1, !canBuy, k, dp), RecursionWithMemoisation(p, ind + 1, canBuy, k, dp));
+        } else {
+            dp[ind][canBuy][k] = max({ p[ind] + RecursionWithMemoisation(p, ind + 1, !canBuy, k - 1, dp), RecursionWithMemoisation(p, ind + 1, canBuy, k, dp) });
         }
-        return dp[0][1][K];
+        
+        return dp[ind][canBuy][k];
     }
-
-    int maxProfit( vector<int> &prices) {
-        return bottomup(2, prices);
+    
+    int maxProfit(vector<int> &prices) {
+        int k = 2; // change the value of k as per the question 
+        vector<vector<vector<int>>> dp(prices.size() + 1, vector<vector<int>>(3,vector<int>(k+1,-1)));
+        return RecursionWithMemoisation(prices, 0, true, 2, dp);
     }
 };
